@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang>
+<html lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
     <!--Setting-->
     <meta charset="UTF-8">
@@ -8,12 +8,12 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-capable" content="SevenHsu">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no,email=no,adress=no">
     <meta name="browsermode" content="application">
     <meta name="screen-orientation" content="portrait">
-    <link rel="dns-prefetch" href="https://sevenHsu.github.io">
+    <link rel="dns-prefetch" href="https://sevenhsu.github.io">
     <!--SEO-->
 
     <meta name="keywords" content>
@@ -31,21 +31,21 @@
     <!--Title-->
 
 
-<title>Hello World | Hexo</title>
+<title>Hello World | SevenHsu</title>
 
 
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="SevenHsu" type="application/atom+xml">
 
 
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="./favicon.ico">
 
     
 
 
 
-<link rel="stylesheet" href="/sevenHsu.github.io/css/bootstrap.min.css?rev=3.3.7">
-<link rel="stylesheet" href="/sevenHsu.github.io/css/font-awesome.min.css?rev=4.5.0">
-<link rel="stylesheet" href="/sevenHsu.github.io/css/style.css?rev=@@hash">
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
 
 
 
@@ -77,15 +77,15 @@
 <![endif]-->
 
 <body>
-    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <header class="main-header" style="background-image:url(/./img/banner.jpg)">
     <div class="main-header-box">
-        <a class="header-avatar" href="/" title="John Doe">
-            <img src="/sevenHsu.github.io/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        <a class="header-avatar" href="/" title="Seven Hsu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
         </a>
         <div class="branding">
         	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
             
-                 <img src="/sevenHsu.github.io/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+                <h2> Ahh...!I didn&#39;t write last week. </h2>
             
     	</div>
     </div>
@@ -98,29 +98,29 @@
                     <span class="sr-only"></span>
                         <i class="fa fa-bars"></i>
                     </span>
-                    <a class="navbar-brand" href="https://sevenHsu.github.io">Hexo</a>
+                    <a class="navbar-brand" href="https://sevenhsu.github.io">SevenHsu</a>
                 </div>
                 <div class="collapse navbar-collapse" id="main-menu">
                     <ul class="menu">
                         
                             <li role="presentation" class="text-center">
-                                <a href="/"><i class="fa "></i>Home</a>
+                                <a href="/"><i class="fa "></i>首页</a>
                             </li>
                         
                             <li role="presentation" class="text-center">
-                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                                <a href="/blog/categories/CV/"><i class="fa "></i>CV</a>
                             </li>
                         
                             <li role="presentation" class="text-center">
-                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                                <a href="/blog/categories/NLP/"><i class="fa "></i>NLP</a>
                             </li>
                         
                             <li role="presentation" class="text-center">
-                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                                <a href="/blog/categories/other/"><i class="fa "></i>Other</a>
                             </li>
                         
                             <li role="presentation" class="text-center">
-                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                                <a href="/blog/archives/"><i class="fa "></i>TimeLine</a>
                             </li>
                         
                     </ul>
@@ -204,27 +204,25 @@
 
     <div id="comments">
         
-	
-    <div id="vcomments" class="valine"></div>
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/sevenHsu.github.io/assets/valine.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
 
-    <script>
-        new Valine({
-            av: AV,
-            el: '#vcomments',
-            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-            placeholder: '说点什么吧',
-            notify: false,
-            verify: false,
-            avatar: 'mm',
-            meta: 'nick,mail'.split(','),
-            pageSize: '10',
-            path: window.location.pathname,
-            lang: ''.toLowerCase()
-        })
-    </script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var pathArr = location.pathname.split("/");
+    var pathId = pathArr[pathArr.length-1];
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "9a37ba7df3917edbc6e6",
+        clientSecret: "e9260acc5c8032da7bc3f0ac689777d75e1e1310",
+        repo: "https://sevenhsu.github.io/",
+        owner: "sevenhsu",
+        admin: "[sevenhsu]",
+        id: "" || pathId || location.pathname,
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
 
 
     </div>
@@ -237,7 +235,7 @@
                 
                     <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
-        <h3 class="title">Table of Contents</h3>
+        <h3 class="title">文章目录</h3>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
         
@@ -291,7 +289,7 @@
 
 
 
-<script src="/sevenHsu.github.io/js/app.js?rev=@@hash"></script>
+<script src="/js/app.js?rev=@@hash"></script>
 
 </body>
 </html>
