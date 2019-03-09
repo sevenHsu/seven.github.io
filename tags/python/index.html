@@ -34,8 +34,6 @@
 <title>标签: python | SevenHsu</title>
 
 
-    <link rel="alternate" href="/atom.xml" title="SevenHsu" type="application/atom+xml">
-
 
     <link rel="icon" href="/favicon.ico">
 
@@ -73,6 +71,10 @@
 <![endif]-->
 
 <body>
+    <div id="qrdiv" style="text-align:center;padding:10%;width:100%;height:100%;display:none;background:rgba(0,0,0,0.7);position:absolute;z-index:100" onclick="javascript:this.style.display='none'">
+        <div id="canvas_div" style="width:200px;height:200px;margin:0 auto;background-color:#FFF;padding:4px 0 0 4px;"></div>
+        <div style="width:100%;height:20px;font-size:24px;padding:30px; color:#FFFFFF">打开微信扫一扫，即刻分享</div>
+    </div>
     <header class="main-header" style="background-image:url(/./img/banner.jpg)">
     <div class="main-header-box">
         <a class="header-avatar" href="/" title="Seven Hsu">
@@ -207,17 +209,34 @@
       <h3 class="title">社交</h3> 
         <div class="content social">
             
-	            <a href="//github.com/sevenhsu" rel="external nofollow" title="Github" target="_blank">
-			    	<i class="github fa fa-github"></i>
-			    </a>
+                
+	                <a href="//github.com/sevenhsu" rel="external nofollow" title="Github" target="_blank">
+			    	    <i class="github fa fa-github"></i>
+			        </a>
+			    
             
-	            <a href="mailto:jetxu24@icloud.com" rel="external nofollow" title="邮箱" target="_blank">
-			    	<i class="envelope-o fa fa-envelope-o"></i>
-			    </a>
+                
+	                <a href="mailto:jetxu24@icloud.com" rel="external nofollow" title="Email" target="_blank">
+			    	    <i class="envelope-o fa fa-envelope-o"></i>
+			        </a>
+			    
             
-	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
-			    	<i class="feed fa fa-feed"></i>
-			    </a>
+                
+                    <script>
+                        function show(msg){
+                            document.getElementById("canvas_div").innerHTML='';
+                            document.getElementById("qrdiv").style.display='block';
+                            var qrcode = new QRCode(document.getElementById("canvas_div"), {
+                                width : 192,
+                                height : 192
+                            });
+                            qrcode.makeCode(msg)
+                        }
+                    </script>
+                    <a rel="external nofollow" title="Wechat" style="cursor:pointer" onclick="show(location)">
+                        <i class="wechat fa fa-wechat"></i>
+                    </a>
+                
             
         </div>
     </div>
@@ -304,6 +323,7 @@
 
 	<script src="/js/search.js?rev=@@hash"></script>
 
+<script src="/js/qrcode.js?rev=@@hash"></script>
 
 
 
