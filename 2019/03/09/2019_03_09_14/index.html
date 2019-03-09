@@ -16,10 +16,15 @@
     <link rel="dns-prefetch" href="https://sevenhsu.github.io">
     <!--SEO-->
 
-    <meta name="keywords" content="python,tensorflow">
+    <meta name="keywords" content="tensorflow">
 
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...">
+    <meta name="description" content="方法一
+在服务器上启动Tensorboard，保证本地主机能够正常访问服务器下，在本地访问服务器IP:Tensorboard所在端口
+
+
+服务器上启动Tensorboard
+ 12tensorb...">
 
 
 
@@ -31,7 +36,7 @@
     <!--Title-->
 
 
-<title>second_passenge | SevenHsu</title>
+<title>如何在服务器上使用Tensorboard | SevenHsu</title>
 
 
 
@@ -136,16 +141,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="second_passenge">
+        <h1 id="如何在服务器上使用Tensorboard">
             
-	            second_passenge
+	            如何在服务器上使用Tensorboard
             
         </h1>
         <div class="post-meta">
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/CV/">CV</a>
+            <a class="category-link" href="/categories/Other/">Other</a>
         </span>
     
 
@@ -154,7 +159,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/python/">python</a> <a class="tag-link" href="/tags/tensorflow/">tensorflow</a>
+                    <a class="tag-link" href="/tags/tensorflow/">tensorflow</a>
                 
             </span>
         </span>
@@ -164,7 +169,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/02/22</span>
+            <span class="date-meta">2019/03/09</span>
         </span>
         
             <span class="fa-wrap">
@@ -179,15 +184,32 @@
     </div>
     
     <div class="post-body post-content">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><blockquote>
+<p>在服务器上启动Tensorboard，保证本地主机能够正常访问服务器下，在本地访问服务器IP:Tensorboard所在端口</p>
+</blockquote>
+<ul>
+<li><p>服务器上启动Tensorboard</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir your_logdir_path --port 8000</span><br><span class="line"><span class="comment"># your_logdir_path:你的tensorflow训练日志文件夹</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地浏览器访问</p>
+<p> 比如服务器IP为10.0.1.12,在本地浏览器访问10.0.1.12:8000就可以了。</p>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><blockquote>
+<p>在服务器上启动Tensorboard，将服务器端口映射到本地主机上，在本地访问localhost:映射的端口</p>
+</blockquote>
+</li>
+<li><p>内网映射：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh -L local_port:127.0.0.1:server_port username@server_ip</span><br><span class="line"><span class="comment"># local_port:映射到本地的端口号</span></span><br><span class="line"><span class="comment"># server_port:服务器的映射端口号</span></span><br><span class="line"><span class="comment"># username:访问服务器的用户名</span></span><br><span class="line"><span class="comment"># server_ip:服务器IP</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外网映射</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh -p telnet_port -L local_port:127.0.0.1:server_port username@server_ip</span><br><span class="line"><span class="comment"># telnet_port:远程连接端口</span></span><br><span class="line"><span class="comment"># local_port:映射到本地的端口号</span></span><br><span class="line"><span class="comment"># server_port:服务器的映射端口号</span></span><br><span class="line"><span class="comment"># username:访问服务器的用户名</span></span><br><span class="line"><span class="comment"># server_ip:服务器IP</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务器上启动Tensorboard</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir your_logdir_path --port server_port</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地浏览器访问</p>
+<p> 本地浏览器访问127.0.0.1:local_port</p>
+</li>
+</ul>
 
     </div>
     
@@ -277,7 +299,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-text">方法二</span></a></li></ol>
         
     </div>
 </aside>
