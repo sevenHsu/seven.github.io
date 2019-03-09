@@ -1151,10 +1151,10 @@ pre {
 ====================================================*/
 .reward {
   padding: 5px 0;
+  text-align: center;
 }
 .reward .reward-wrap {
   position: relative;
-  display: block;
   font-size: 30px;
   width: 62px;
   height: 62px;
@@ -1174,6 +1174,21 @@ pre {
   border-radius: 50%;
 }
 .reward .reward-wrap .reward-box {
+  position: absolute;
+  top: -220px;
+  left: 50%;
+  display: none;
+  width: 350px;
+  height: 200px;
+  margin-left: -175px;
+  padding: 15px;
+  border: 1px solid #e6e6e6;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 1px 1px #efefef;
+  -moz-box-shadow: 0 1px 1px 1px #efefef;
+  box-shadow: 0 1px 1px 1px #efefef;
+}
+.reward-box-share {
   position: absolute;
   top: -220px;
   left: 50%;

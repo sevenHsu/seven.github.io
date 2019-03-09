@@ -192,7 +192,7 @@
     </div>
     
         <div class="reward" ontouchstart>
-    <div class="reward-wrap">赏
+    <div class="reward-wrap fa fa-money">
         <div class="reward-box">
             
             
@@ -202,7 +202,24 @@
             
         </div>
     </div>
-    <p class="reward-tip">感谢您的支持</p>
+    <div class="reward-wrap fa fa-share-alt-square" style="margin-left:20px;" onmouseover="show_share(location)">
+        <div class="reward-box">
+            <div class="reward-type" id="share_box" style="width:100px;margin:0 auto;margin-top:35px;">
+            </div>
+            <div style="color:#666;font-size:14px;">扫码分享</div>
+            <script>
+                function show_share(msg){
+                    document.getElementById("share_box").innerHTML="";
+                    var qrcode = new QRCode(document.getElementById("share_box"), {
+                        width : 96,
+                        height : 96
+                    });
+                    qrcode.makeCode(''+msg);
+                }
+            </script>
+        </div>
+    </div>
+    <p class="reward-tip">感谢您的支持与分享</p>
 </div>
 
 
