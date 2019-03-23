@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html lang="default">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="SevenHsu">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://sevenhsu.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="tensorflow,python">
+
+
+    <meta name="description" content="
+1 基本描述
+原始论文： Deep Residual Learning for Image Recognition 
+论文复现：ResNet-TensorFlow
+
+2 背景问题
+ResNet...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>ResNet | SevenHsu</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+	<script type="text/javascript" src="https://tajs.qq.com/stats?sId=66181254" charset="UTF-8"></script>
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="qrdiv" style="text-align:center;width:100%;height:100%;display:none;background:rgba(0,0,0,0.7);position:absolute;z-index:100" onclick="javascript:this.style.display='none'">
+        <div style="width:100%;height:300px;position:fixed;margin-top:10%;">
+            <div id="canvas_div" style="width:200px;height:200px;margin:0 auto;background-color:#FFF;padding:4px 0 0 4px;"></div>
+            <div style="width:100%;height:20px;font-size:24px;padding:30px;position:absolute; color:#FFFFFF">打开微信扫一扫，即刻分享</div>
+        </div>
+    </div>
+    <header class="main-header" style="background-image:url(/./img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="Seven Hsu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	
+            
+                <h2 style="width:100%;height:100%;font-family:cursive;">
+                    Ahh...!I didn&#39;t write last week.
+                </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://sevenhsu.github.io">SevenHsu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/CV/"><i class="fa "></i>CV</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/NLP/"><i class="fa "></i>NLP</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/other/"><i class="fa "></i>Other</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>TimeLine</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="ResNet">
+            
+	            ResNet
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/CV/">CV</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/python/">python</a> <a class="tag-link" href="/tags/tensorflow/">tensorflow</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/03/23</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script></p>
+<h1 id="1-基本描述"><a href="#1-基本描述" class="headerlink" title="1 基本描述"></a>1 基本描述</h1><blockquote>
+<p>原始论文：<a href="https://arxiv.org/abs/1512.03385v1" target="_blank" rel="noopener"><strong> <em>Deep Residual Learning for Image Recognition</em> </strong></a></p>
+<p>论文复现：<a href="https://github.com/sevenhsu/ResNet-TensorFlow" target="_blank" rel="noopener"><strong>ResNet-TensorFlow</strong></a></p>
+</blockquote>
+<h1 id="2-背景问题"><a href="#2-背景问题" class="headerlink" title="2 背景问题"></a>2 背景问题</h1><blockquote>
+<p>ResNet的提出是为了解决深层网络难训练的问题</p>
+<ul>
+<li>CNN在图像特征提取方面有非常好的拓展性，增加网络深度可以提取更多的特征，越深的层   提取的特征越抽象，越具有语义信息。</li>
+<li>直接增加网络的层数会导致梯度消失或梯度爆炸等问题是的模型训练失败。</li>
+<li>在模型中增加正则化和在模型中间增加BN(<a href="https://arxiv.org/abs/1502.03167v3" target="_blank" rel="noopener">batch normalization</a>)可避免梯度消失和梯度爆炸等问题，使得模型可训练。</li>
+<li>虽然增加正则和BN层的模型可训练，但是深层模型在训练时出现了收敛退化的问题，ResNet作者通过实验证明通过多次迭代训练是无法解决对话问题的。</li>
+</ul>
+</blockquote>
+<h1 id="3-网络结构"><a href="#3-网络结构" class="headerlink" title="3 网络结构"></a>3 网络结构</h1><blockquote>
+<p>作者为了解决深层网络难以训练的问题，提出了残差学习，在深层的训练的时候，将输入的feature map加上浅层的feature map特征。<br>ResNet的网络结构借鉴了VGG的网络结构，在第一层使用了7*7的大尺寸卷积核，在后面的卷积block中都使用了细小的卷积核。</p>
+</blockquote>
+<h2 id="3-1-残差函数"><a href="#3-1-残差函数" class="headerlink" title="3.1 残差函数"></a>3.1 残差函数</h2>   <center><img src="/img/article_img/2019_03_19_10/residual_learning.png" alt="residual Learning" title="残差函数"></center>
+
+   <center>图3.1 残差学习block</center>
+
+<p>   残差函数 $$H(x)=F(x)+x$$ F(x)可以用前向传播shortcut connection(shortcut connection)。<br>   shortcut connection就是如图所示跳过一层或多层的连接，在resnet中这个shortcut connection是简单的将恒等mapping<br>   加上当前层的输出。恒等的shortcut connection即没有增加额外的参数也没有增加计算复杂度，所以整个网络依然是可以端到端训练的。</p>
+<h2 id="3-2-shortcut-connection"><a href="#3-2-shortcut-connection" class="headerlink" title="3.2 shortcut connection"></a>3.2 shortcut connection</h2><blockquote>
+<p>ResNet文章中作者提出shortcut connection的方式有三种</p>
+</blockquote>
+<ul>
+<li><p>A：zero-padding，没有额外的参数。在mapping的四周填充0</p>
+</li>
+<li><p>B：使用1*1的卷积投影增加shortcut维度，不需要改变尺寸和维度的恒等不变</p>
+</li>
+<li><p>C：全部shortcut使用1*1的卷积投影</p>
+<p>A、B、C三种方式的优缺点主要体现在时间复杂度上，A的参数量 &lt; B的参数量 &lt; C的参数量。<br>由于C对全部的shortcut都使用了1*1的卷积投影，导致训练时间上近乎是B的两倍。作者通<br>过实验分析得到C的效果略微优于A和B，这是优于C在1*1的卷积上也学到了一些特征</p>
+</li>
+</ul>
+<h2 id="3-3-bottleneck"><a href="#3-3-bottleneck" class="headerlink" title="3.3 bottleneck"></a>3.3 bottleneck</h2><blockquote>
+<p>考虑到更深的网络能够承受的训练时长，作者对深层网络将block改成了Bottleneck的设计<br>对于残差函数F(x) ，使用堆叠的3层卷积网络替换block的2层，3层分别是1*1，3*3，1*1。<br>其中的1*1的卷积是负责消减和扩展维度的。</p>
+</blockquote>
+<ul>
+<li><p>non-Bottleneck和Bottleneck</p>
+ <center><img src="/img/article_img/2019_03_19_10/bottleneck.png" alt="non-Bottleneck &amp; Bottleneck" title="non-bottleneck &amp; bottleneck"></center>
+
+ <center>图3.2 non-bottleneck和bottleneck结构</center>
+
+<p> 图3.2左侧的是non-Bottleneck结构，shortcut connection跳过的是两个3*3的卷积。右侧是bottleneck的结构。</p>
+</li>
+<li><p>多层ResNet结构</p>
+ <center><img src="/img/article_img/2019_03_19_10/architecture.png" alt="architecture" title="Architecture for ImageNet"></center>
+
+ <center>表3.1 在ImageNet分类任务上的网络结构</center><br> 表3.1是基于ImageNet分类任务的ResNet网络结构，输入是224*224放入图片。<br><br> <center><img src="/img/article_img/2019_03_19_10/resnet.png" alt="resnet" title="resnet"></center>
+
+<p> <center>图3.3 VGG19/普通深层网络/ResNet深层网络对比</center><br> 右侧是34层的ResNet网络结构图，图中的实线恒等连接，虚线是需要做维度变换的，用到的方法就是上面的A、B、C三种。</p>
+</li>
+</ul>
+<h1 id="4-实现工作"><a href="#4-实现工作" class="headerlink" title="4 实现工作"></a>4 实现工作</h1><h2 id="4-1-数据预处理"><a href="#4-1-数据预处理" class="headerlink" title="4.1 数据预处理"></a>4.1 数据预处理</h2><p>ResNet在实验上对图片的处理借鉴了VGG的方法，将图片缩放到[256,480]之间的随机尺寸，<br>然后在缩放的图片之间随机裁剪尺寸为224*224的图片，这样也起到了数据增强的作用。在测试<br>和预测的时候可以采用同样的方式随机裁剪多张图片，取预测结果的众数。</p>
+<h2 id="网络搭建"><a href="#网络搭建" class="headerlink" title="网络搭建"></a>网络搭建</h2><p>在卷积层之后添加BN层可以防止过拟合，每一个卷积block开始训练前保存输入，在block训练<br>后做shortcut connection，在连接的时候考虑feature map和保存的输入维度是否一致，不<br>一致使用上文的A、B、C三种方法做放缩。</p>
+<h2 id="4-2-在CIFAR-10的实验分析"><a href="#4-2-在CIFAR-10的实验分析" class="headerlink" title="4.2 在CIFAR-10的实验分析"></a>4.2 在CIFAR-10的实验分析</h2><p> 数据预处理，网络的输入是32*32,每个像素减去平均值。第一层是3*3的卷积,然后一共使用堆叠<br> 6n层3*3的卷积，feature map size分别为{32,16,8},每个feature map size堆叠2n层。<br> 卷积核的数量是{16,32,64},作者在实验中测试了n={3,5,7,9}，结果error大概在7左右。</p>
+<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h1><p>总体上来说ResNet的网络结构并不复杂，但是提出残差学习这点，并且使得深层网络可训练简直是一次<br>技术上的革命。ResNet基础网络大部分借鉴了VGG，其中的first convolution和后面block里的<br>3*3的细小卷积核和使用随机裁剪的图像处理方法。ResNet的重点在于残差学习，这使得训练的深层网络<br>在ImageNet等比赛中取得了冠军。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://arxiv.org/abs/1512.03385v1" target="_blank" rel="noopener"><strong>ResNet</strong></a></li>
+<li><a href="https://www.cnblogs.com/alanma/p/6877166.html" target="_blank" rel="noopener"><strong>残差网络ResNet笔记</strong></a></li>
+</ul>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap fa fa-money">
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <div class="reward-wrap fa fa-share-alt-square" style="margin-left:20px;" onmouseover="show_share(location)">
+        <div class="reward-box">
+            <div class="reward-type" id="share_box" style="width:100px;margin:0 auto;margin-top:35px;">
+            </div>
+            <div style="color:#666;font-size:14px;">扫码分享</div>
+            <script>
+                function show_share(msg){
+                    document.getElementById("share_box").innerHTML="";
+                    var qrcode = new QRCode(document.getElementById("share_box"), {
+                        width : 96,
+                        height : 96
+                    });
+                    qrcode.makeCode(''+msg);
+                }
+            </script>
+        </div>
+    </div>
+    <p class="reward-tip">感谢您的支持与分享</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://sevenhsu.github.io" target="_blank">SevenHsu</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/03/19/2019_03_09_14/" class="next-post btn btn-default" title="如何在服务器上使用Tensorboard">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">如何在服务器上使用Tensorboard</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var pathArr = location.pathname.split("/");
+    var pathId = pathArr[pathArr.length-1];
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "9a37ba7df3917edbc6e6",
+        clientSecret: "e9260acc5c8032da7bc3f0ac689777d75e1e1310",
+        repo: "sevenhsu.github.io",
+        owner: "sevenHsu",
+        admin: ["sevenHsu"],
+        id: location.pathname,
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-基本描述"><span class="toc-text">1 基本描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-背景问题"><span class="toc-text">2 背景问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-网络结构"><span class="toc-text">3 网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-残差函数"><span class="toc-text">3.1 残差函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-shortcut-connection"><span class="toc-text">3.2 shortcut connection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-bottleneck"><span class="toc-text">3.3 bottleneck</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-实现工作"><span class="toc-text">4 实现工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-数据预处理"><span class="toc-text">4.1 数据预处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络搭建"><span class="toc-text">网络搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-在CIFAR-10的实验分析"><span class="toc-text">4.2 在CIFAR-10的实验分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-总结"><span class="toc-text">5 总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        Total:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        Visitors:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                <a href="https://sevenhsu.github.io" class="copyright-links" target="_blank" rel="nofollow">SevenHsu</a>
+                </span> |
+                <span>
+                    Thanks <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                     & 
+                    <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/qrcode.js?rev=@@hash"></script>
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
