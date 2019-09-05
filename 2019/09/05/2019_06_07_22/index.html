@@ -1,0 +1,424 @@
+<!DOCTYPE HTML>
+<html lang="default">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="SevenHsu">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://sevenhsu.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="CV,Face Detect">
+
+
+    <meta name="description" content="
+
+
+MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
+
+
+1 基本描述
+概述：MTCNN是一个多任务的...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>MTCNN(人脸检测) | SevenHsu</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+	<script type="text/javascript" src="https://tajs.qq.com/stats?sId=66181254" charset="UTF-8"></script>
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="qrdiv" style="text-align:center;width:100%;height:100%;display:none;background:rgba(0,0,0,0.7);position:absolute;z-index:100" onclick="javascript:this.style.display='none'">
+        <div style="width:100%;height:300px;position:fixed;margin-top:10%;">
+            <div id="canvas_div" style="width:200px;height:200px;margin:0 auto;background-color:#FFF;padding:4px 0 0 4px;"></div>
+            <div style="width:100%;height:20px;font-size:24px;padding:30px;position:absolute; color:#FFFFFF">打开微信扫一扫，即刻分享</div>
+        </div>
+    </div>
+    <header class="main-header" style="background-image:url(/./img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="Seven Hsu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	
+            
+                <h2 style="width:100%;height:100%;font-family:cursive;">
+                    Ahh...!I didn&#39;t write last week.
+                </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://sevenhsu.github.io">SevenHsu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/CV/"><i class="fa "></i>CV</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/NLP/"><i class="fa "></i>NLP</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/other/"><i class="fa "></i>Other</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>TimeLine</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="MTCNN(人脸检测)">
+            
+	            MTCNN(人脸检测)
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/CV/">CV</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/CV/">CV</a> <a class="tag-link" href="/tags/Face-Detect/">Face Detect</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/09/05</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        
+<script type="text/javascript" async src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
+</script>
+
+<h1 id="1-基本描述"><a href="#1-基本描述" class="headerlink" title="1 基本描述"></a>1 基本描述</h1><blockquote>
+<p>概述：MTCNN是一个多任务的及联卷积网络，用于人脸检测和矫正，是属于anchor free的一类检测算法。训练时，分别训练三个网络；预测时，通过图像金字塔的方式检测多个尺寸的人脸。网络完成了人脸检测和关键点回归两个任务，关键点可以用于人脸矫正。所以MTCNN是将人脸检测和人脸矫正放在了一起。</p>
+<p>原始论文：<a href="https://arxiv.org/ftp/arxiv/papers/1604/1604.02878.pdf" target="_blank" rel="noopener"><strong> <em>Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks</em> </strong></a></p>
+<p>论文复现：<a href="https://github.com/sevenhsu/MTCNN-TensorFlow" target="_blank" rel="noopener">MTCNN-TensorFlow</a></p>
+</blockquote>
+<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2 网络结构"></a>2 网络结构</h1><blockquote>
+<p>首先了解MTCNN的网络结构才能理解MTCNN的工作原理及优缺点，作者使用三个网络网络及联起来实现人脸检测和关键点标定两个任务，可有有效的提高检测的效果，提高mAP。三个网络的作用都是一样的，用于人脸检测和关键点回归；唯一的区别在于三个网络的输入尺寸是不同的和第一个网络(P-Net)是全卷积，下面将会细讲三个网络。</p>
+</blockquote>
+<center><img src="/img/article_img/2019_06_07_22/mtcnn_net.png" alt="MTCNN net structure" title="MTCNN网络结构"></center><br><center>图2.1 MTCNN网络结构</center>
+
+<h2 id="2-1-P-Net-Proposal"><a href="#2-1-P-Net-Proposal" class="headerlink" title="2.1 P-Net(Proposal)"></a>2.1 P-Net(Proposal)</h2><blockquote>
+<p>P-Net是MTCNN的第一个网络，是一个全卷积网络。P-Net的目的是初步筛选出可能的人脸区域，即起到Proposal（预选）的作用。图2.1中P-Net的输入是$12\times12\times3$,实则只有在训练的时候我们明确的给定网络的输入为$12\times12\times3$的图片。在预测的时候输入是任意尺寸的图像，具体细节在<a href="#implement"><strong>实现过程</strong></a>中讲解。</p>
+</blockquote>
+<p><center><img src="/img/article_img/2019_06_07_22/p-net.png" alt="P-Net" title="P-Net网络结构"></center></p>
+<p><center>图2.2 P-Net网络结构</center><br>   从网络结构可以看出P-Net的感受野是$12\times12$，所以在训练的时候我们输入$12\times12\times3$的图像训练，经过三层网络（第一层卷积后接了一个max pool）后得到32个$1\times1$的feature map。再接三个$1\times1$的卷积网络，分别用于分类、回归人脸位置和回归5个关键点。在预测的时候我们将一张图像resize到不同的尺寸得到图像金字塔，然后依次将每个尺寸的图像输入P-Net得到每个尺寸图片的检测结果。</p>
+<p><center><img src="/img/article_img/2019_06_07_22/image_pyramid.png" alt="Image-Pyramid" title="图像金字塔"></center></p>
+<p><center>图2.3 图像金字塔</center><br>   训练时输入的图像是$12\times12\times3$的，可以很好的理解为这张$12\times12$的图像是不是人脸，并且回归人脸位置和关键点位置。那么预测时输入是任意尺寸的图像，这时是如何预测整张图像的全部位置是否是人脸，以及回归人脸位置和关键点的？</p>
+<p><center><img src="/img/article_img/2019_06_07_22/p-net-conv.png" alt="Image-Conv-Pool" title="预测图像"></center></p>
+<p><center>图2.4 检测过程</center><br>   960x640的图像先做Resize生成图像金字塔，这里取其中一张结果$672\times448$。将$672\times448$的图像输入P-Net得到$332\times219$的feature map，此时feature map第一个像素就对应着输入图像中第一个$12\times12$像素区域的feature map（也就对应着原图中第一个$17\times17$像素的区域）。就跟将输入图像中第一个$12\times12$的像素抠出来输入P-Net一样，起到了滑动窗口的作用，但只是做了卷积。当然P-Net所用到的只是$12\times12$像素区域，也就是说能包含的信息非常少，只能做一个大概的判断是否是人脸和回归一个大概的人脸位置。因此，在P-Net中可以不做关键点的回归。所以预测时，图像通过P-Net会有许多误检。预测时可以通过非极大值抑制（NMS）”合并”重合率较高的检测框，亦可以通过confidence筛选检测框。</p>
+<h2 id="2-2-R-Net-Refinement"><a href="#2-2-R-Net-Refinement" class="headerlink" title="2.2 R-Net(Refinement)"></a>2.2 R-Net(Refinement)</h2><blockquote>
+<p>R-Net，故名思意，就是一个精炼的网络，将P-Net筛选出的可能人脸区域输入给R-Net中，做进一步的筛选。</p>
+</blockquote>
+<p><center><img src="/img/article_img/2019_06_07_22/r-net.png" alt="R-Net" title="R-Net网络结构"></center></p>
+<p><center>图2.5 R-Net网络结构</center><br>   由于R-Net不是全卷积网络，因此R-Net的输入时固定的，为$24\times24$。在训练和预测时，都需要将图像Resize到$24\times24$的大小。R-Net的输入是$24\times24$，比P-Net多上4倍的信息，也就使得R-Net的分类和回归效果要好于P-Net。因此，在R-Net中就可以对人脸关键点进行训练。预测时，P-Net筛选出的人脸区域将在R-Net中被进一步过滤，人脸的位置也将被再一次的回归。</p>
+<h2 id="2-3-O-Net-Output"><a href="#2-3-O-Net-Output" class="headerlink" title="2.3 O-Net(Output)"></a>2.3 O-Net(Output)</h2><blockquote>
+<p>O-Net，作者称之为输出网络，大概是因为这是最后一个网络了吧，该在这里结束输出了。O-Net和R-Net没有本质上的区别，都是在进一步地筛选人脸及回归位置和关键点。</p>
+</blockquote>
+<p><center><img src="/img/article_img/2019_06_07_22/o-net.png" alt="O-Net" title="O-Net网络结构"></center></p>
+<p><center>图2.5 O-Net网络结构</center><br>   O-Net和R-Net一样，对上一个网络筛选的结果做进一步过滤和position的回归。为了能够更好的学到人脸的特征，作者将O-Net加深了一层，也将O-Net的输入调到了$48\times48$。最终的输出就是人脸的位置(x1,y1,x2,y2)和5个关键点的坐标，一共14个输出值。当然不是人脸的就不需要输出了。</p>
+<h1 id="3-实现过程"><a href="#3-实现过程" class="headerlink" title="3 实现过程"></a>3 <span id="implement"></span>实现过程</h1><blockquote>
+<p>MTCNN一共三个网络，每个网络的输入都不一样。所以需要训练数据做需处理。对于P-Net，输入是$12\times12$。对于R-Net，输入是$24\times24$。对于O-Net，输入是$48\times48$。三个网络最后都有三个分支，分别是人脸二分类（是否人脸）、人脸位置回归、关键点回归。</p>
+</blockquote>
+<h2 id="3-1-数据处理"><a href="#3-1-数据处理" class="headerlink" title="3.1 数据处理"></a>3.1 数据处理</h2><p>   对于训练数据，只有图片和标注的人脸框坐标。为了能够更好的训练网络，使其能够在分类和回归上都有非常好的表现，需要我们手动生成我们的训练样本。对于分类任务，需要的是人脸正样本和非人脸负样本。对于回归人脸位置坐标点任务，需要人脸正样本和部分人脸样本。</p>
+<p><center><img src="/img/article_img/2019_06_07_22/pos_sample.png" alt="人脸正样本" title="正样本"></center></p>
+<p><center>图3.1 正样本(人脸)</center><br>   在分类时，需要人脸正样本。我们可以在原始数据集GT的四周随机取矩形框，并计算其与GT的IoU值，取IoU大于0.6的为正样本。</p>
+<p><center><img src="/img/article_img/2019_06_07_22/neg_sample.png" alt="人脸负样本" title="负样本"></center></p>
+<p><center>图3.2 负样本(非人脸)</center><br>   同样取与GT的IoU小于0.3的矩形框区域为负样本。</p>
+<p><center><img src="/img/article_img/2019_06_07_22/part_sample.png" alt="部分人脸样本" title="部分人脸样本"></center></p>
+<p><center>图3.3 部分人脸样本(部分人脸)</center><br>   为了更好的回归人脸关键点位置，需要部分人脸样本。所以在GT周围随机取矩形框，选取其中与GT的IoU介于0.3和0.6之间的矩形框区域为部分人脸样本。回归人脸位置坐标需要注意的是，这里直接回归四个坐标值是困难的。所以在实际训练的时候，我们回归其与GT的偏差。</p>
+<p><center>$$d_x=\frac{GT_x-x}{size}$$</center></p>
+<p><center>$$d_y=\frac{GT_y-y}{size}$$</center><br>   计算随机取的部分人脸矩形框和GT的偏差，上式中<em>GT_x</em>表示GT中横坐标点的值，<em>x</em>表示随机选取的部分人脸框的横坐标值。size是随机挑选取的矩形框的尺寸。正样本也需要计算其偏差。</p>
+<p>   对于人脸关键点数据准备，不必多讲。利用标注在人脸上的五个关键点数据训练并回归即可。<br>   准备好上面四种数据，并生成四种数据的label（格式如下）<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">positive sample:image_name 1 dx1 dy1 dx2 dy2</span><br><span class="line">negative sample:image_name 0</span><br><span class="line">partial sample:image_name -1 dx1 dy1 dx2 dy2</span><br><span class="line">landmark sample: x1 y1 x2 y2 x3 y3 x4 y4 x5 y5</span><br></pre></td></tr></table></figure></p>
+<p>   MTCNN的三个网络在训练时，主要作用略有偏差。所有针对每个网络，数据的比列有所不同，论文中使用的比例是$neg:pos:part:landmark=3:1:1:2$。</p>
+<h2 id="3-2-Loss函数"><a href="#3-2-Loss函数" class="headerlink" title="3.2 Loss函数"></a>3.2 Loss函数</h2><blockquote>
+<p>MTCNN中每个网络都有三个任务。人脸二分类，损失函数是交叉熵损失函数；人脸位置坐标回归，是L2损失函数；最后是人脸关键点(MTCNN中为5个关键点)回归，也是L2损失函数。</p>
+</blockquote>
+<p>人脸检测的交叉熵损失函数：</p>
+<p><center>$$L_i^{det}=-(y_i^{det}log(p_i)+(1-y_i^{det})(1-log(p_i)))$$</center><br>人脸坐标位置回归损失函数(L2)：</p>
+<p><center>$$L_i^{box}=\left |\left |\hat y_i^{box}-y_i^{box}\right |\right |_2^2$$</center><br>landmark关键点回归损失函数(L2)</p>
+<p><center>$$L_i^{landmark}=\left |\left|\hat y_i^{landmark}-y_i^{landmark}\right |\right|_2^2$$</center><br>针对PNet,RNet,ONet三个网络,每个网络都有三个任务的损失函数。所以最终的目的是最小化最终的损失函数（对二分类、坐标点回归、landmark回归三部分的损失函数的加权求和）。</p>
+<p><center>$$min\sum_{i=1}^N\sum_{j\in{det,box,landmark}}\alpha_j\beta_i^jL_i^j$$</center><br>上式中，N是训练样本数，$\alpha_j$表示针对三个任务的权重，$\alpha_j$在PNet、RNet、ONet中的取值不相同，因为三个网络对三种任务的侧重点不一样。PNet和RNet中$\alpha_{det}=1$,$\alpha_{box}=0.5$,$\alpha_{landmark}=0.5$;ONet中$\alpha_{det}=1$,$\alpha_{box}=0.5$,$\alpha_{landmark}=1$;$\beta_i^j\in\{0,1\}$表示样本类型标识，如果样本类别是正负样本，就只需要计算$L_{det}$,所以设置$\beta_i^{box}$和$\beta_i^{landmark}$为0。</p>
+<h2 id="3-3-训练"><a href="#3-3-训练" class="headerlink" title="3.3 训练"></a>3.3 训练</h2><blockquote>
+<p>训练的时候需要训练分别训练PNet、RNet、ONet三个网络，针对PNet的任务初步是筛选可能的人脸区域，确定出后选框。针对RNet是近一步筛选出人脸区域，并对人脸位置做回归矫正。以及对人脸关键点的回归。ONet和RNet的任务终点一致，仍然需要进一步筛选高质量的人脸区域和精确回归人脸坐标位置以及修正人脸五个关键点的位置。在训练过程中，每一个mini-batch包含多种样本类型，所以针对样本类型不同，计算的loss也就不同，需要注意$\beta_i^j$。</p>
+</blockquote>
+<h3 id="3-3-1-OHEM（Online-Hard-example-mining）"><a href="#3-3-1-OHEM（Online-Hard-example-mining）" class="headerlink" title="3.3.1 OHEM（Online Hard example mining）"></a>3.3.1 OHEM（Online Hard example mining）</h3><p>  在MTCNN训练过程中作者还提出了一个trick，就是在线困难样本挖掘，其目的是在训练网络的过程中实时的挑选出困难样本，以使得模型有更好的收敛效果。当然作者也通过实验证明了OHEM确实使得模型有更好的表现。如何实现OHEM呢？在训练过程中，将前向传播过程中计算得到的loss排序。然后选出loss排前70%的样本，在反向传播过程中只需要计算这前70%的样本的loss。</p>
+<h3 id="3-3-2-训练PNet"><a href="#3-3-2-训练PNet" class="headerlink" title="3.3.2 训练PNet"></a>3.3.2 训练PNet</h3><p>PNet的训练需要大量的正负样本用于训练好一个分类器，这时候的部分人脸样本就不需要太多，在PNet中可以不做landmark的训练。需要注意的是在训练的时候PNet的输入是$12\times$的图片，而不是任意大小的图片。在第三层卷积之后并行接两个$1\times1$的卷积得到分类结果和位置坐标点，然后计算联合loss。在计算联合loss的时候记得乘以每个loss的权重。</p>
+<h3 id="3-3-3-训练RNet"><a href="#3-3-3-训练RNet" class="headerlink" title="3.3.3 训练RNet"></a>3.3.3 训练RNet</h3><p>训练RNet，主要是进一步在PNet的结果上筛选质量更高的人脸。所以在这一步，网络的输入调整至$24\times24$,并在这一步训练人脸关键点的回归。所以训练RNet时需要用到正负样本、部分人脸样本和landmark数据样本。</p>
+<h3 id="3-3-4-训练ONet"><a href="#3-3-4-训练ONet" class="headerlink" title="3.3.4 训练ONet"></a>3.3.4 训练ONet</h3><p>ONet的训练和RNet的训练没有区别，仅仅只是输入上的尺寸调整为$48\times48$，目的是在第三个输出网络上，得到更好的结果，就需要更多的信息用于人脸的精选和坐标位置的精确回归。</p>
+<h2 id="3-4-预测"><a href="#3-4-预测" class="headerlink" title="3.4 预测"></a>3.4 预测</h2><blockquote>
+<p>预测也是分三步。不过在第一步开始之前，需要对输入图片做一下处理。即生成图像金字塔，由于PNet是全卷积，没有固定的输入尺寸，而针对每张图像的感受野是$12\times12$，所以需要生成图像金字塔，以便检测出图像中所有尺寸的人脸。第一，通过PNet确定每个中心点的得分和位置坐标，通过NMS(non-maximum suppression，非极大值抑制)的方法和设置PNet的score 阈值筛掉一部分区域。第二，将第一步由PNet得到的区域(此区域通过位置坐标点抠出来)resize到$24\times24$的尺寸然后输入到RNet中，通过RNet得到每个区域的得分和坐标点回归值以及landmark的回归点。再次通过NMS和RNet设置的阈值过滤掉一部分人脸。第三，将RNet筛选出的区域（位置坐标点已更新，区域已调整）抠出来，resize到$48*48$的尺寸输入ONet，通过ONet得到face score，face position和landmark position，最后再次通过NMS和ONet的阈值筛选出最终的人脸。 </p>
+</blockquote>
+<h3 id="3-4-1-生成图像金字塔"><a href="#3-4-1-生成图像金字塔" class="headerlink" title="3.4.1 生成图像金字塔"></a>3.4.1 生成图像金字塔</h3><p>针对预测时输入的每张图像，根据一定的比例循环resize图像，直到图像尺寸小于我们希望检测到最小人脸尺寸。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">img //输入图像</span><br><span class="line">scale = size of img</span><br><span class="line">factor //缩放比例</span><br><span class="line">img_list //图像金字塔列表</span><br><span class="line">while scale &gt; min_face_size</span><br><span class="line">    add resize(img,scale) to img_list</span><br><span class="line">    scale = scale * factor</span><br></pre></td></tr></table></figure></p>
+<p>然后通过三个网络得到最终的结果，高质量的人脸face和精准的face position以及精准的landmark结果。最后使用landmark结果做仿射变换实现人脸矫正，得到最终结果。</p>
+<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h1><p>MTCNN是一个anchor free的方法，整个网络结构非常简单，但是这种级联网络的方式非常好。三个网络逐级检测使得检测的质量明显提高，其次在前一级网络筛掉大量非人脸区域后，使得后面的网络的计算量笑了许多。而且将；landmark结合到face classify 和 face position regression中也使得MTCNN的功能非常强大。但是MTCNN在预测时需要做图像金字塔，这明显会使得PNet以及后面网络的计算量提高。</p>
+<h1 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5 参考资料"></a>5 参考资料</h1><p><a href="(https://arxiv.org/ftp/arxiv/papers/1604/1604.02878.pdf"><em>MTCNN</em></a>)<br><a href="https://github.com/kpzhang93/MTCNN_face_detection_alignment" target="_blank" rel="noopener"><em>MTCNN MATLAB implementation</em></a></p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap fa fa-money">
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <div class="reward-wrap fa fa-share-alt-square" style="margin-left:20px;" onmouseover="show_share(location)">
+        <div class="reward-box">
+            <div class="reward-type" id="share_box" style="width:100px;margin:0 auto;margin-top:35px;">
+            </div>
+            <div style="color:#666;font-size:14px;">扫码分享</div>
+            <script>
+                function show_share(msg){
+                    document.getElementById("share_box").innerHTML="";
+                    var qrcode = new QRCode(document.getElementById("share_box"), {
+                        width : 96,
+                        height : 96
+                    });
+                    qrcode.makeCode(''+msg);
+                }
+            </script>
+        </div>
+    </div>
+    <p class="reward-tip">感谢您的支持与分享</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://sevenhsu.github.io" target="_blank">SevenHsu</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/09/03/2019_03_19_10/" class="next-post btn btn-default" title="ResNet">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">ResNet</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.4.1/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var pathArr = location.pathname.split("/");
+    var pathId = pathArr[pathArr.length-1];
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "9a37ba7df3917edbc6e6",
+        clientSecret: "e9260acc5c8032da7bc3f0ac689777d75e1e1310",
+        repo: "sevenhsu.github.io",
+        owner: "sevenHsu",
+        admin: ["sevenHsu"],
+        id: location.pathname,
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-基本描述"><span class="toc-text">1 基本描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-网络结构"><span class="toc-text">2 网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-P-Net-Proposal"><span class="toc-text">2.1 P-Net(Proposal)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-R-Net-Refinement"><span class="toc-text">2.2 R-Net(Refinement)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-O-Net-Output"><span class="toc-text">2.3 O-Net(Output)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实现过程"><span class="toc-text">3 实现过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-数据处理"><span class="toc-text">3.1 数据处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Loss函数"><span class="toc-text">3.2 Loss函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-训练"><span class="toc-text">3.3 训练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-OHEM（Online-Hard-example-mining）"><span class="toc-text">3.3.1 OHEM（Online Hard example mining）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-训练PNet"><span class="toc-text">3.3.2 训练PNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-训练RNet"><span class="toc-text">3.3.3 训练RNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-训练ONet"><span class="toc-text">3.3.4 训练ONet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-预测"><span class="toc-text">3.4 预测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-生成图像金字塔"><span class="toc-text">3.4.1 生成图像金字塔</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-总结"><span class="toc-text">4 总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-参考资料"><span class="toc-text">5 参考资料</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        Total:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        Visitors:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                <a href="https://sevenhsu.github.io" class="copyright-links" target="_blank" rel="nofollow">SevenHsu</a>
+                </span> |
+                <span>
+                    Thanks <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                     & 
+                    <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/qrcode.js?rev=@@hash"></script>
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

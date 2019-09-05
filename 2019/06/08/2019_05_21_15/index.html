@@ -16,15 +16,13 @@
     <link rel="dns-prefetch" href="https://sevenhsu.github.io">
     <!--SEO-->
 
-    <meta name="keywords" content="tensorflow">
+    <meta name="keywords" content="CV,Head Pose">
 
 
-    <meta name="description" content="方法一
-在服务器上启动Tensorboard，保证本地主机能够正常访问服务器下，在本地访问服务器IP:Tensorboard所在端口
+    <meta name="description" content="1 基本描述
+概述：通过卷积网络学习图像特征，做到头部姿态预测
 
-
-服务器上启动Tensorboard
- 12tensorb...">
+2 网络结构3 实现过程4 训练&amp;预测5 总结">
 
 
 
@@ -36,7 +34,7 @@
     <!--Title-->
 
 
-<title>如何在服务器上使用Tensorboard | SevenHsu</title>
+<title>Deep-Head-Pose(头部姿态) | SevenHsu</title>
 
 
 
@@ -143,16 +141,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="如何在服务器上使用Tensorboard">
+        <h1 id="Deep-Head-Pose(头部姿态)">
             
-	            如何在服务器上使用Tensorboard
+	            Deep-Head-Pose(头部姿态)
             
         </h1>
         <div class="post-meta">
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/Other/">Other</a>
+            <a class="category-link" href="/categories/CV/">CV</a>
         </span>
     
 
@@ -161,7 +159,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/tensorflow/">tensorflow</a>
+                    <a class="tag-link" href="/tags/CV/">CV</a> <a class="tag-link" href="/tags/Head-Pose/">Head Pose</a>
                 
             </span>
         </span>
@@ -171,7 +169,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/03/19</span>
+            <span class="date-meta">2019/06/08</span>
         </span>
         
             <span class="fa-wrap">
@@ -186,35 +184,10 @@
     </div>
     
     <div class="post-body post-content">
-        <h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><blockquote>
-<p>在服务器上启动Tensorboard，保证本地主机能够正常访问服务器下，在本地访问服务器IP:Tensorboard所在端口</p>
+        <h1 id="1-基本描述"><a href="#1-基本描述" class="headerlink" title="1 基本描述"></a>1 基本描述</h1><blockquote>
+<p>概述：通过卷积网络学习图像特征，做到头部姿态预测</p>
 </blockquote>
-<ul>
-<li><p>服务器上启动Tensorboard</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir your_logdir_path --port 8000</span><br><span class="line"><span class="comment"># your_logdir_path:你的tensorflow训练日志文件夹</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>本地浏览器访问</p>
-<p> 比如服务器IP为10.0.1.12,在本地浏览器访问10.0.1.12:8000就可以了。</p>
-</li>
-</ul>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><blockquote>
-<p>在服务器上启动Tensorboard，将服务器端口映射到本地主机上，在本地访问localhost:映射的端口</p>
-</blockquote>
-<ul>
-<li><p>内网映射：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh -L local_port:127.0.0.1:server_port username@server_ip</span><br><span class="line"><span class="comment"># local_port:映射到本地的端口号</span></span><br><span class="line"><span class="comment"># server_port:服务器的映射端口号</span></span><br><span class="line"><span class="comment"># username:访问服务器的用户名</span></span><br><span class="line"><span class="comment"># server_ip:服务器IP</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>外网映射</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh -p telnet_port -L local_port:127.0.0.1:server_port username@server_ip</span><br><span class="line"><span class="comment"># telnet_port:远程连接端口</span></span><br><span class="line"><span class="comment"># local_port:映射到本地的端口号</span></span><br><span class="line"><span class="comment"># server_port:服务器的映射端口号</span></span><br><span class="line"><span class="comment"># username:访问服务器的用户名</span></span><br><span class="line"><span class="comment"># server_ip:服务器IP</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>服务器上启动Tensorboard</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir your_logdir_path --port server_port</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>本地浏览器访问</p>
-<p> 本地浏览器访问127.0.0.1:local_port</p>
-</li>
-</ul>
-
+<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2 网络结构"></a>2 网络结构</h1><h1 id="3-实现过程"><a href="#3-实现过程" class="headerlink" title="3 实现过程"></a>3 实现过程</h1><h1 id="4-训练-amp-预测"><a href="#4-训练-amp-预测" class="headerlink" title="4 训练&amp;预测"></a>4 训练&amp;预测</h1><h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h1>
     </div>
     
         <div class="reward" ontouchstart>
@@ -264,15 +237,15 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/06/08/2019_05_21_15/" class="pre-post btn btn-default" title="Deep-Head-Pose(头部姿态)">
+        <a href="/2019/06/12/2019_03_28_18/" class="pre-post btn btn-default" title="linux开启ssh服务">
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">Deep-Head-Pose(头部姿态)</span>
+            <span class="hidden-xs">linux开启ssh服务</span>
         </a>
     
     
-        <a href="/2019/03/09/2019_03_09_16/" class="next-post btn btn-default" title="github+hexo搭建个人博客">
+        <a href="/2019/03/19/2019_03_09_14/" class="next-post btn btn-default" title="如何在服务器上使用Tensorboard">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">github+hexo搭建个人博客</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">如何在服务器上使用Tensorboard</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -313,7 +286,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-text">方法二</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-基本描述"><span class="toc-text">1 基本描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-网络结构"><span class="toc-text">2 网络结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实现过程"><span class="toc-text">3 实现过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-训练-amp-预测"><span class="toc-text">4 训练&amp;预测</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-总结"><span class="toc-text">5 总结</span></a></li></ol>
         
     </div>
 </aside>
