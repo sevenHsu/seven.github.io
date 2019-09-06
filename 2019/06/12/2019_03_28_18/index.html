@@ -193,7 +193,7 @@
 </blockquote>
 <ul>
 <li><p>通过以下命令安装ssh服务器</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br><span class="line"><span class="meta">#</span>或者使用yum 安装</span><br><span class="line">sudo yum install openssh-server</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br><span class="line"><span class="meta">#</span><span class="bash">或者使用yum 安装</span></span><br><span class="line">sudo yum install openssh-server</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>编辑/etc/ssh/sshd_config文件配置ssh</p>
  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin yes  # 是否允许root通过ssh认证</span><br><span class="line">PasswordAuthentication no  # 是否允许使用密码认证</span><br></pre></td></tr></table></figure>
@@ -204,10 +204,10 @@
 </blockquote>
 <ul>
 <li><p>添加新用户的命令</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useradd [-d home] [-s shell] [-c comment] [-m] [-r] name</span><br><span class="line"><span class="meta">#</span> -d /home/username：设置用户登入时的主目录</span><br><span class="line"><span class="meta">#</span> -s /bin/bash：用户登入时使用的shell</span><br><span class="line"><span class="meta">#</span> -c comment：备注</span><br><span class="line"><span class="meta">#</span> -m 用户目录不存在时，自动建立用户的登入目录</span><br><span class="line"><span class="meta">#</span> -r 建立系统账号</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useradd [-d home] [-s shell] [-c comment] [-m] [-r] name</span><br><span class="line"><span class="meta">#</span><span class="bash"> -d /home/username：设置用户登入时的主目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -s /bin/bash：用户登入时使用的shell</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -c comment：备注</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -m 用户目录不存在时，自动建立用户的登入目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -r 建立系统账号</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>提升用户权限<br> 将用户提升到sudoers权限，编辑/etc/sudoers</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br><span class="line"><span class="meta">#</span> 配置如下：在root ALL=(ALL:ALL) ALL下添加一行</span><br><span class="line">username ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置如下：在root ALL=(ALL:ALL) ALL下添加一行</span></span><br><span class="line">username ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>用户在本地生成自己的ssh密钥对</p>
 <blockquote>
@@ -275,9 +275,9 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/09/06/2019_03_19_10/" class="pre-post btn btn-default" title="ResNet">
+        <a href="/2019/09/06/2019_06_07_22/" class="pre-post btn btn-default" title="MTCNN(人脸检测)">
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">ResNet</span>
+            <span class="hidden-xs">MTCNN(人脸检测)</span>
         </a>
     
     
