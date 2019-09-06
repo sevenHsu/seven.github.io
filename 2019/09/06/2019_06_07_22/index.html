@@ -173,7 +173,7 @@ MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/09/05</span>
+            <span class="date-meta">2019/09/06</span>
         </span>
         
             <span class="fa-wrap">
@@ -189,7 +189,7 @@ MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
     
     <div class="post-body post-content">
         
-<script type="text/javascript" async src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
 </script>
@@ -258,7 +258,7 @@ MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
 <h3 id="3-4-1-生成图像金字塔"><a href="#3-4-1-生成图像金字塔" class="headerlink" title="3.4.1 生成图像金字塔"></a>3.4.1 生成图像金字塔</h3><p>针对预测时输入的每张图像，根据一定的比例循环resize图像，直到图像尺寸小于我们希望检测到最小人脸尺寸。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">img //输入图像</span><br><span class="line">scale = size of img</span><br><span class="line">factor //缩放比例</span><br><span class="line">img_list //图像金字塔列表</span><br><span class="line">while scale &gt; min_face_size</span><br><span class="line">    add resize(img,scale) to img_list</span><br><span class="line">    scale = scale * factor</span><br></pre></td></tr></table></figure></p>
 <p>然后通过三个网络得到最终的结果，高质量的人脸face和精准的face position以及精准的landmark结果。最后使用landmark结果做仿射变换实现人脸矫正，得到最终结果。</p>
 <h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h1><p>MTCNN是一个anchor free的方法，整个网络结构非常简单，但是这种级联网络的方式非常好。三个网络逐级检测使得检测的质量明显提高，其次在前一级网络筛掉大量非人脸区域后，使得后面的网络的计算量笑了许多。而且将；landmark结合到face classify 和 face position regression中也使得MTCNN的功能非常强大。但是MTCNN在预测时需要做图像金字塔，这明显会使得PNet以及后面网络的计算量提高。</p>
-<h1 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5 参考资料"></a>5 参考资料</h1><p><a href="(https://arxiv.org/ftp/arxiv/papers/1604/1604.02878.pdf"><em>MTCNN</em></a>)<br><a href="https://github.com/kpzhang93/MTCNN_face_detection_alignment" target="_blank" rel="noopener"><em>MTCNN MATLAB implementation</em></a></p>
+<h1 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5 参考资料"></a>5 参考资料</h1><p><a href="(https://arxiv.org/ftp/arxiv/papers/1604/1604.02878.pdf"><em>MTCNN</em></a><br><a href="https://github.com/kpzhang93/MTCNN_face_detection_alignment" target="_blank" rel="noopener"><em>MTCNN MATLAB implementation</em></a></p>
 
     </div>
     
@@ -310,7 +310,7 @@ MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']]}});
 <div class="article-nav prev-next-wrap clearfix">
     
     
-        <a href="/2019/09/03/2019_03_19_10/" class="next-post btn btn-default" title="ResNet">
+        <a href="/2019/09/06/2019_03_19_10/" class="next-post btn btn-default" title="ResNet">
             <span class="hidden-lg">下一篇</span>
             <span class="hidden-xs">ResNet</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
