@@ -182,6 +182,10 @@
 </div>
             
             
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>372</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
     </div>
     
     <div class="post-body post-content">
@@ -218,7 +222,7 @@
 <p>将自己.ssh/id_rsa.pub的内容复制到服务器/home/username/.ssh/authorized_keys文件里。<br>其中username为新建用户的名字，/home/username/.ssh/authorized_keys路径不存在就自己建立文件夹和文件。</p>
 <ul>
 <li><p>新建.ssh文件夹和authorized_keys文件</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir .ssh  # 建立.ssh文件夹</span><br><span class="line">sudo vim authorized_keys  # 将自己的公钥(id_rsa.pub)内容写进去</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir .ssh  # 建立.ssh文件夹</span><br><span class="line">sudo vim authorized_keys  # 将自己的公钥(id_rsa.pub)内容写进去</span><br><span class="line">或者在客户端执行</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub username@xx.xx.xx.xx</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>配置文件和文件夹权限</p>
  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 600 /home/username/.ssh/authorized_keys  # 设置authorized_keys的权限为600</span><br><span class="line">sudo chmod 700 /home/username/.ssh  # 设置.ssh的权限为700</span><br><span class="line">sudo chown -R username. /home/username  # 设置username文件夹的拥有者为username</span><br></pre></td></tr></table></figure>
@@ -281,9 +285,9 @@
         </a>
     
     
-        <a href="/2019/06/08/2019_05_21_15/" class="next-post btn btn-default" title="Deep-Head-Pose(头部姿态)">
+        <a href="/2019/03/19/2019_03_09_14/" class="next-post btn btn-default" title="如何在服务器上使用Tensorboard">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Deep-Head-Pose(头部姿态)</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">如何在服务器上使用Tensorboard</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>

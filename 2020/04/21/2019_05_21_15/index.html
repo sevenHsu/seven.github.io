@@ -16,13 +16,11 @@
     <link rel="dns-prefetch" href="https://sevenhsu.github.io">
     <!--SEO-->
 
-    <meta name="keywords" content="CV,Head Pose">
+    <meta name="keywords" content="CV,Head Pose Estimation">
 
 
     <meta name="description" content="1 基本描述
-概述：通过卷积网络学习图像特征，做到头部姿态预测
-
-2 网络结构3 实现过程4 训练&amp;预测5 总结">
+概述：本文介绍一个基于卷积网络的头部姿态评估模型，并提出Face OrientationVector(FOV)的头部姿态表示方法，在Deep-Head-Pose的基础上提出soft...">
 
 
 
@@ -34,7 +32,7 @@
     <!--Title-->
 
 
-<title>Deep-Head-Pose(头部姿态) | SevenHsu</title>
+<title>Head-Pose-Estimation(头部姿态) | SevenHsu</title>
 
 
 
@@ -141,9 +139,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Deep-Head-Pose(头部姿态)">
+        <h1 id="Head-Pose-Estimation(头部姿态)">
             
-	            Deep-Head-Pose(头部姿态)
+	            Head-Pose-Estimation(头部姿态)
             
         </h1>
         <div class="post-meta">
@@ -159,7 +157,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/CV/">CV</a> <a class="tag-link" href="/tags/Head-Pose/">Head Pose</a>
+                    <a class="tag-link" href="/tags/CV/">CV</a> <a class="tag-link" href="/tags/Head-Pose-Estimation/">Head Pose Estimation</a>
                 
             </span>
         </span>
@@ -169,7 +167,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/06/08</span>
+            <span class="date-meta">2020/04/21</span>
         </span>
         
             <span class="fa-wrap">
@@ -185,9 +183,15 @@
     
     <div class="post-body post-content">
         <h1 id="1-基本描述"><a href="#1-基本描述" class="headerlink" title="1 基本描述"></a>1 基本描述</h1><blockquote>
-<p>概述：通过卷积网络学习图像特征，做到头部姿态预测</p>
+<p>概述：本文介绍一个基于卷积网络的头部姿态评估模型，并提出Face Orientation<br>Vector(FOV)的头部姿态表示方法，在Deep-Head-Pose的基础上提出soft-label替代<br>one-hot的分类概率分布表示方式。<br>项目代码：<a href="https://github.com/sevenhsu/headposenet" target="_blank" rel="noopener">HeadPoseNet</a></p>
 </blockquote>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2 网络结构"></a>2 网络结构</h1><h1 id="3-实现过程"><a href="#3-实现过程" class="headerlink" title="3 实现过程"></a>3 实现过程</h1><h1 id="4-训练-amp-预测"><a href="#4-训练-amp-预测" class="headerlink" title="4 训练&amp;预测"></a>4 训练&amp;预测</h1><h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h1>
+<h1 id="2-背景理论"><a href="#2-背景理论" class="headerlink" title="2 背景理论"></a>2 背景理论</h1><blockquote>
+<p>本小结介绍基础理论知识，将对姿态表示方式(欧拉角、旋转矩阵、FOV)和soft-label做详细的介绍。</p>
+</blockquote>
+<h2 id="2-1-欧拉角"><a href="#2-1-欧拉角" class="headerlink" title="2.1 欧拉角"></a>2.1 欧拉角</h2><blockquote>
+<p>欧拉角用于表示3维空间中物体旋转的过程，一般表示为偏航角(yaw)、俯仰角(pitch)、翻<br>滚角(roll)。</p>
+</blockquote>
+<h1 id="3-网络结构"><a href="#3-网络结构" class="headerlink" title="3 网络结构"></a>3 网络结构</h1><h1 id="4-实现过程"><a href="#4-实现过程" class="headerlink" title="4 实现过程"></a>4 实现过程</h1><h1 id="5-实验结果"><a href="#5-实验结果" class="headerlink" title="5 实验结果"></a>5 实验结果</h1><h1 id="6-总结"><a href="#6-总结" class="headerlink" title="6 总结"></a>6 总结</h1><h1 id><a href="#" class="headerlink" title=" "></a> </h1>
     </div>
     
         <div class="reward" ontouchstart>
@@ -237,15 +241,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/06/12/2019_03_28_18/" class="pre-post btn btn-default" title="linux开启ssh服务">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">linux开启ssh服务</span>
-        </a>
     
-    
-        <a href="/2019/03/19/2019_03_09_14/" class="next-post btn btn-default" title="如何在服务器上使用Tensorboard">
+        <a href="/2019/09/23/2019_09_22_15/" class="next-post btn btn-default" title="Mac上VS Code调试C++无法显示STL容器元素">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">如何在服务器上使用Tensorboard</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Mac上VS Code调试C++无法显示STL容器元素</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -286,7 +285,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-基本描述"><span class="toc-text">1 基本描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-网络结构"><span class="toc-text">2 网络结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实现过程"><span class="toc-text">3 实现过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-训练-amp-预测"><span class="toc-text">4 训练&amp;预测</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-总结"><span class="toc-text">5 总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-基本描述"><span class="toc-text">1 基本描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-背景理论"><span class="toc-text">2 背景理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-欧拉角"><span class="toc-text">2.1 欧拉角</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-网络结构"><span class="toc-text">3 网络结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-实现过程"><span class="toc-text">4 实现过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-实验结果"><span class="toc-text">5 实验结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-总结"><span class="toc-text">6 总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-text"> </span></a></li></ol>
         
     </div>
 </aside>
