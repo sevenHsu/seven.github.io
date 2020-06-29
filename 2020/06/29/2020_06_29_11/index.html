@@ -16,14 +16,11 @@
     <link rel="dns-prefetch" href="https://sevenhsu.github.io">
     <!--SEO-->
 
-    <meta name="keywords" content="ssh,linux">
+    <meta name="keywords" content="tensorflow,custom_gradient">
 
 
-    <meta name="description" content="1 基本描述
-在自己的linux服务器上配置ssh服务器，添加新用户并通过ssh连接服务器
-
-2 安装ssh服务并配置
-通过命令service sshd status查看ssh服务器状态，如果自...">
+    <meta name="description" content="问题描述
+在深度神经网络的训练过程中，经常需要自定义函数或一些变换，如果tf.gradient无法对自定义的函数进行自动求导计算梯度，那就需要对自定义的函数补充梯度计算函数。这里，我们以多输出神...">
 
 
 
@@ -35,7 +32,7 @@
     <!--Title-->
 
 
-<title>linux开启ssh服务 | SevenHsu</title>
+<title>TF2.0自定义梯度函数 | SevenHsu</title>
 
 
 
@@ -142,9 +139,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="linux开启ssh服务">
+        <h1 id="TF2.0自定义梯度函数">
             
-	            linux开启ssh服务
+	            TF2.0自定义梯度函数
             
         </h1>
         <div class="post-meta">
@@ -160,7 +157,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/linux/">linux</a> <a class="tag-link" href="/tags/ssh/">ssh</a>
+                    <a class="tag-link" href="/tags/custom-gradient/">custom_gradient</a> <a class="tag-link" href="/tags/tensorflow/">tensorflow</a>
                 
             </span>
         </span>
@@ -170,7 +167,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/06/12</span>
+            <span class="date-meta">2020/06/29</span>
         </span>
         
             <span class="fa-wrap">
@@ -182,51 +179,32 @@
 </div>
             
             
-            <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>382</strong>天之前发表，文中内容可能已经过时。
-            </p>
-        
     </div>
     
     <div class="post-body post-content">
-        <h1 id="1-基本描述"><a href="#1-基本描述" class="headerlink" title="1 基本描述"></a>1 基本描述</h1><blockquote>
-<p>在自己的linux服务器上配置ssh服务器，添加新用户并通过ssh连接服务器</p>
+        <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><blockquote>
+<p>在深度神经网络的训练过程中，经常需要自定义函数或一些变换<br>，如果tf.gradient无法对自定义的函数进行自动求导计算梯度，<br>那就需要对自定义的函数补充梯度计算函数。这里，我们以多输<br>出神经网络结合自定义损失函数的例子展示如何使用TF2.0 进行<br>梯度下降并优化参数</p>
 </blockquote>
-<h1 id="2-安装ssh服务并配置"><a href="#2-安装ssh服务并配置" class="headerlink" title="2 安装ssh服务并配置"></a>2 安装ssh服务并配置</h1><blockquote>
-<p>通过命令<code>service sshd status</code>查看ssh服务器状态，如果自己的服务器上已经安装了ssh服务器，则跳过此步骤</p>
-</blockquote>
-<ul>
-<li><p>通过以下命令安装ssh服务器</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br><span class="line"><span class="meta">#</span>或者使用yum 安装</span><br><span class="line">sudo yum install openssh-server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑/etc/ssh/sshd_config文件配置ssh</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin yes  # 是否允许root通过ssh认证</span><br><span class="line">PasswordAuthentication no  # 是否允许使用密码认证</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="3-添加用户并配置用户的ssh认证"><a href="#3-添加用户并配置用户的ssh认证" class="headerlink" title="3 添加用户并配置用户的ssh认证"></a>3 添加用户并配置用户的ssh认证</h1><blockquote>
-<p>通过以下命令添加新用户，根据自己的需要配置参数</p>
-</blockquote>
-<ul>
-<li><p>添加新用户的命令</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useradd [-d home] [-s shell] [-c comment] [-m] [-r] name</span><br><span class="line"><span class="meta">#</span> -d /home/username：设置用户登入时的主目录</span><br><span class="line"><span class="meta">#</span> -s /bin/bash：用户登入时使用的shell</span><br><span class="line"><span class="meta">#</span> -c comment：备注</span><br><span class="line"><span class="meta">#</span> -m 用户目录不存在时，自动建立用户的登入目录</span><br><span class="line"><span class="meta">#</span> -r 建立系统账号</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>提升用户权限<br> 将用户提升到sudoers权限，编辑/etc/sudoers</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br><span class="line"><span class="meta">#</span> 配置如下：在root ALL=(ALL:ALL) ALL下添加一行</span><br><span class="line">username ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用户在本地生成自己的ssh密钥对</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ul>
+<li><p>定义神经网络</p>
 <blockquote>
-<p>安装git，使用git bash下执行<code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code>生成自己的密钥对<br>生成的密钥对位置：Windows在C:/Users/username/.ssh,Mac os在/home/username/.ssh</p>
+<p>定义神经网络结构，并且为多输出网络</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyNet</span><span class="params">(tf.keras.Model)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(MyNet, self).__init__()</span><br><span class="line">        self.deep_cnn=DeepCNN()</span><br><span class="line">        self.avgpool = AvgPool()</span><br><span class="line">        self.fc_1 = Dense(classes)</span><br><span class="line">        self.fc_2 = Dense(classes)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self,x)</span>:</span></span><br><span class="line">        x = self.deep_cnn(x)</span><br><span class="line">        x = self.avgpool(x)</span><br><span class="line">        output1 = self.fc_1(x)</span><br><span class="line">        output2 = self.fc_2(x)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> output1,output2</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>自定义损失函数&amp;计算梯度函数</p>
+<blockquote>
+<p>损失函数对神经网络的输出做一定变换，并计算出损失值，此处应在损失<br>函数内定义梯度计算函数，并返回梯度计算函数对象。损失函数需要使用<br>@tf.custom_gradient装饰</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@tf.custom_gradient</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myLossFn</span><span class="params">(output1,output2,labels)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    loss = f_loss(output1,output2,labels)  <span class="comment"># 计算损失值</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">grad_fn</span><span class="params">(grad)</span>:</span>  <span class="comment"># 计算梯度函数</span></span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        grad1,grad2=f_grad(output1,output2,labels)  <span class="comment">#只需要计算output1和output2 的梯度</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> grad_1,grad2,<span class="keyword">None</span>  <span class="comment"># 由于损失函数有三个参数，所以需要返回3个值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> loss,grad_fn</span><br></pre></td></tr></table></figure>
 </blockquote>
 </li>
 </ul>
-<p>将自己.ssh/id_rsa.pub的内容复制到服务器/home/username/.ssh/authorized_keys文件里。<br>其中username为新建用户的名字，/home/username/.ssh/authorized_keys路径不存在就自己建立文件夹和文件。</p>
 <ul>
-<li><p>新建.ssh文件夹和authorized_keys文件</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir .ssh  # 建立.ssh文件夹</span><br><span class="line">sudo vim authorized_keys  # 将自己的公钥(id_rsa.pub)内容写进去</span><br><span class="line">或者在客户端执行</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub username@xx.xx.xx.xx</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置文件和文件夹权限</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 600 /home/username/.ssh/authorized_keys  # 设置authorized_keys的权限为600</span><br><span class="line">sudo chmod 700 /home/username/.ssh  # 设置.ssh的权限为700</span><br><span class="line">sudo chown -R username. /home/username  # 设置username文件夹的拥有者为username</span><br></pre></td></tr></table></figure>
-<p> 配置好一切后，用户在本地终端使用ssh serverhost即可连接到服务器。</p>
+<li><p>训练设置</p>
+<blockquote>
+<p>在 forward propagation之后进行损失值计算，<br>然后计算梯度,然后通过梯度更新参数</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># training setting</span></span><br><span class="line">model = MyNet()</span><br><span class="line">...</span><br><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    output1,output2=model(x)</span><br><span class="line">    loss = myLossFn(output1,output2,labels)</span><br><span class="line">grad_list = model.trainable_variables</span><br><span class="line">grad_list += [output1,output2]</span><br><span class="line">grad = tape.gradient(loss,grad_list)</span><br><span class="line">optimazer.apply_gradients(zip(grad,grad_list)) <span class="comment"># 如果output1和output2没有可优化的参数，可以使用model.trainable_variables替换grad_list</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</blockquote>
 </li>
 </ul>
 
@@ -279,15 +257,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/09/06/2019_06_07_22/" class="pre-post btn btn-default" title="MTCNN(人脸检测)">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">MTCNN(人脸检测)</span>
-        </a>
     
-    
-        <a href="/2019/03/19/2019_03_09_14/" class="next-post btn btn-default" title="如何在服务器上使用Tensorboard">
+        <a href="/2020/04/21/2019_05_21_15/" class="next-post btn btn-default" title="Head-Pose-Estimation(头部姿态)">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">如何在服务器上使用Tensorboard</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Head-Pose-Estimation(头部姿态)</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -328,7 +301,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-基本描述"><span class="toc-text">1 基本描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-安装ssh服务并配置"><span class="toc-text">2 安装ssh服务并配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-添加用户并配置用户的ssh认证"><span class="toc-text">3 添加用户并配置用户的ssh认证</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题描述"><span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a></li></ol>
         
     </div>
 </aside>
